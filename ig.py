@@ -14,8 +14,16 @@ def main():
     with open("profiles.txt") as file_in:
         for line in file_in:
             channels.append(line)
+    try:
+        new_folder = "videos"
+        os.mkdir(new_folder)
+    except FileExistsError:
+        pass
     for ch in channels:
-        os.mkdir(f'./videos/{ch}')
+        try:
+            os.mkdir(f'./videos/{ch}')
+        except FileExistsError:
+            pass
         user_id = cl.user_id_from_username(ch)
         medias = cl.user_medias(user_id, 1000)
         j=1
@@ -31,8 +39,8 @@ def main():
             except IndexError as e:
                 print(f'{colorama.Fore.YELLOW}--------------------Videos Ended for {ch}--------------------')
                 break
-            except:
-                print(f'{colorama.Fore.RED}[-] File Type incorrect!')
+            except Exception as e :
+                print(f'{colorama.Fore.RED}[-] Skipping... {e}')
                 j+=1
                 pass
     print(f'{colorama.Fore.GREEN}{colorama.Style.BRIGHT}[+] Downloaded All Videos!')
