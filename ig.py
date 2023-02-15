@@ -9,12 +9,11 @@ cl = Client()
 cl.login(username="USERNAME", password='Password@12345')
 i=0
 x=10
+channels = []
 def main():
     with open("profiles.txt") as file_in:
-        lines = []
         for line in file_in:
-            lines.append(line)
-    channels = []
+            channels.append(line)
     for ch in channels:
         os.mkdir(f'./videos/{ch}')
         user_id = cl.user_id_from_username(ch)
